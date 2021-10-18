@@ -1,16 +1,18 @@
 extends Node2D
 
+var scene = null
+var orb_scene = null
+var spawn = null
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	# Find the scene, the spawn element, and the orb_scene
+	scene = get_tree().get_root().get_node("Scene")
+	spawn = scene.get_node("Spawn")
+	orb_scene = load("res://Scenes/Prefabs/Orb.tscn")
+	# Create a starting orb
+	make_orb()
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func make_orb():
+	var orb = orb_scene.instance()
+	orb.position = spawn.position
+	scene.add_child(orb)
