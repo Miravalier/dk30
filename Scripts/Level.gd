@@ -6,8 +6,8 @@ var orb = null
 var orb_scene = null
 var spawn = null
 var time = 0
-var gravity_formula = null
-var wind_formula = null
+var gravity_formula = Expression.new()
+var wind_formula = Expression.new()
 
 func _ready():
 	# Global map that stores formula values
@@ -21,13 +21,9 @@ func _ready():
 	variables.set("time", time)
 	# Create a starting orb
 	make_orb()
-	# Create formulas
-	var Formula = preload("res://Scripts/Formula.gd")
-	gravity_formula = Formula.new(variables)
-	wind_formula = Formula.new(variables)
-	# Debug formula values
-	gravity_formula.terms = [1, "-", "time"]
-	wind_formula.terms = [1]
+	# Debug formulas
+	gravity_formula.parse("1 - time", variables.keys())
+	wind_formula.parse("1", variables.keys())
 
 func _physics_process(delta):
 	# Keep track of time elapsed as a formula variable
@@ -37,8 +33,8 @@ func _physics_process(delta):
 	if orb == null:
 		return
 	# Evaluate wind and gravity formulas
-	var wind = wind_formula.evaluate()
-	var gravity = gravity_formula.evaluate()
+	var wind = wind_formula.execute(variables.values())
+	var gravity = gravity_formula.execute(variables.values())
 	# Apply physics to the orb
 	orb.add_central_force(Vector2(wind, gravity))
 

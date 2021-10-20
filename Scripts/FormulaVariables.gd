@@ -10,3 +10,9 @@ func set(name, value):
 
 func has(name):
 	return data.has(name)
+
+func keys():
+	return data.keys()
+
+func values():
+	return data.values()
