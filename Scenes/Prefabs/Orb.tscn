@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Assets/Orb/Orb 06.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/OrbAnimation.gd" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Assets/Orb/Orb 04.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Orb/Orb 03.png" type="Texture" id=8]
 [ext_resource path="res://Assets/Orb/Orb 02.png" type="Texture" id=9]
+[ext_resource path="res://Scripts/Orb.gd" type="Script" id=10]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -21,8 +22,9 @@ animations = [ {
 [sub_resource type="CircleShape2D" id=2]
 radius = 29.0
 
-[node name="Orb" type="KinematicBody2D"]
-position = Vector2( 426.334, 255.171 )
+[node name="Orb" type="RigidBody2D"]
+gravity_scale = 0.0
+script = ExtResource( 10 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 0.25, 0.25 )
