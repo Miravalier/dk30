@@ -1,0 +1,9 @@
+# TODO: add name
+
+TODO: add description
+
+## Developer Setup
+
+1. [Download](https://godotengine.org/download/) Godotstandard >=3.3.4.
+2. Clone this repo.
+3. Open Godot and load `project.godot`.
