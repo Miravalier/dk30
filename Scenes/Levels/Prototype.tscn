@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Assets/Goal/GoalTexture.tres" type="Texture" id=1]
 [ext_resource path="res://Assets/Spawn/SpawnGradient.tres" type="Gradient" id=2]
@@ -7,6 +7,9 @@
 [sub_resource type="GradientTexture" id=1]
 gradient = ExtResource( 2 )
 width = 1
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 5.71546
 
 [node name="Scene" type="Node2D"]
 script = ExtResource( 3 )
@@ -24,3 +27,11 @@ position = Vector2( 153.931, 467.045 )
 [node name="Sprite" type="Sprite" parent="Spawn"]
 scale = Vector2( 50, 50 )
 texture = SubResource( 1 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2( 153.931, 467.045 )
+scale = Vector2( 50, 50 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( 11.82, -3.1 )
+shape = SubResource( 2 )
