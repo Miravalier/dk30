@@ -1,9 +1,9 @@
-# TODO: add name
+# Ragdoll Golf (Prototype)
 
-TODO: add description
+A 2D, single player game written in GDScript. Players try to launch their ragdolls to reach a goal in a minimum number of strokes, while controlling the physics of the level.
 
 ## Developer Setup
 
-1. [Download](https://godotengine.org/download/) Godotstandard >=3.3.4.
+1. [Download](https://godotengine.org/download/) Godot standard >=3.3.4.
 2. Clone this repo.
 3. Open Godot and load `project.godot`.
