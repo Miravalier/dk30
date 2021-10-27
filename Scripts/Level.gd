@@ -35,8 +35,15 @@ func _physics_process(delta):
 	# Evaluate wind and gravity formulas
 	var wind = wind_formula.execute(variables.values())
 	var gravity = gravity_formula.execute(variables.values())
+	# Check for success
+	if wind_formula.has_execute_failed():
+		print("Wind expression execution failed: %s", wind_formula.get_error_text())
+		return
+	if gravity_formula.has_execute_failed():
+		print("Gravity expression execution failed: %s", gravity_formula.get_error_text())
+		return
 	# Apply physics to the orb
-	orb.add_central_force(Vector2(wind, gravity))
+	orb.add_central_force(Vector2(0, gravity))
 
 func make_orb():
 	orb = orb_scene.instance()
