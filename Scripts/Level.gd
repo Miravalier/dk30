@@ -5,7 +5,7 @@ var scene: Node2D = null
 var orb: RigidBody2D = null
 var orb_scene = null
 var spawn: Node2D = null
-var time: int = 0
+var time: float = 0
 var wind_formula: Expression = null
 
 
@@ -23,7 +23,7 @@ func _ready():
 	make_orb()
 
 
-func _physics_process(delta):
+func _physics_process(delta: float):
 	# Keep track of time elapsed as a formula variable.
 	time += delta
 	variables.set("time", time)
@@ -32,7 +32,6 @@ func _physics_process(delta):
 		return
 	# Read wind and gravity forces.
 	var wind: float = 0 if wind_formula == null else wind_formula.execute(variables.values())
-	print("wind: ", wind)
 	# Apply physics to the orb.
 	orb.add_central_force(Vector2(wind, 0))
 
@@ -50,6 +49,7 @@ func take_stroke():
 	# Parse expression from inputs.
 	var wind_input: String = "0" if find_node("WindInput").text == "" else find_node("WindInput").text
 	# Reset the expression.
+	time = 0
 	wind_formula = Expression.new()
 	wind_formula.parse(wind_input, variables.keys())
 	wind_formula.execute(variables.values())

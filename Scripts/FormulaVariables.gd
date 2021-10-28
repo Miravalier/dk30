@@ -1,17 +1,18 @@
 extends Node
 
+# Assumes key and value order is deterministic within the object.
 var data = {}
 
-func get(name):
+func get(name: String):
 	return data[name]
 
-func set(name, value):
+func set(name: String, value):
 	data[name] = value
 
-func has(name):
+func has(name: String):
 	return data.has(name)
 
-func keys():
+func keys() -> PoolStringArray:
 	return data.keys()
 
 func values():
