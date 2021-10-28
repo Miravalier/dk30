@@ -1,14 +1,12 @@
 extends Node2D
 
 var variables = null
-var scene = null
-var orb = null
+var scene: Node2D = null
+var orb: RigidBody2D = null
 var orb_scene = null
-var spawn = null
-var time = 0
-var gravity_formula = Expression.new()
-var wind = 0
-var gravity = 0
+var spawn: Node2D = null
+var time: int = 0
+var wind_formula: Expression = null
 
 
 func _ready():
@@ -23,8 +21,6 @@ func _ready():
 	variables.set("time", time)
 	# Create a starting orb
 	make_orb()
-	# Debug formulas
-	gravity_formula.parse("1 - time", variables.keys())
 
 
 func _physics_process(delta):
@@ -35,8 +31,10 @@ func _physics_process(delta):
 	if orb == null:
 		return
 	# Read wind and gravity forces.
+	var wind: float = 0 if wind_formula == null else wind_formula.execute(variables.values())
+	print("wind: ", wind)
 	# Apply physics to the orb.
-	orb.add_central_force(Vector2(wind, gravity))
+	orb.add_central_force(Vector2(wind, 0))
 
 
 func make_orb():
@@ -47,17 +45,16 @@ func make_orb():
 
 func take_stroke():
 	# Disable button.
-	var take_stroke_button = find_node("TakeStrokeButton")
+	var take_stroke_button: Button = find_node("TakeStrokeButton")
 	take_stroke_button.disabled = true
 	# Parse expression from inputs.
-	var wind_string = "0" if find_node("WindInput").text == "" else find_node("WindInput").text
-	var wind_formula = Expression.new()
-	wind_formula.parse(wind_string, variables.keys())
-	print(wind_string)
-	# Execute expression and assaign to global var.
-	wind = wind_formula.execute(variables.values())
-	# If it fails, return error.
+	var wind_input: String = "0" if find_node("WindInput").text == "" else find_node("WindInput").text
+	# Reset the expression.
+	wind_formula = Expression.new()
+	wind_formula.parse(wind_input, variables.keys())
+	wind_formula.execute(variables.values())
+	# Test execute expression. If it fails, return error.
 	if wind_formula.has_execute_failed():
-		print("Wind expression execution failed: %s", wind_formula.get_error_text())
+		print("Wind expression execution failed: ", wind_formula.get_error_text())
 		take_stroke_button.disabled = false
 		return
