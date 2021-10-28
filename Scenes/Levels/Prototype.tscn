@@ -330,6 +330,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="GravityInput" type="LineEdit" parent="."]
+margin_left = 766.26
+margin_top = 36.7182
+margin_right = 892.26
+margin_bottom = 60.7182
+text = "1/time"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="TakeStrokeButton" type="Button" parent="."]
 margin_left = 922.262
 margin_top = 13.8591
