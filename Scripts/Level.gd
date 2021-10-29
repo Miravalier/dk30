@@ -50,7 +50,7 @@ func take_stroke():
 	var take_stroke_button: Button = find_node("TakeStrokeButton")
 	take_stroke_button.disabled = true
 	
-	# Parse expression from inputs.
+	# Parse expression from inputs. Units currently mean nothing.
 	var wind_input: LineEdit = find_node("WindInput")
 	var wind_input_val: String = "0" if wind_input.text == "" else wind_input.text
 	# Reset the expression.
@@ -63,8 +63,8 @@ func take_stroke():
 		take_stroke_button.disabled = false
 		return
 		
-	# Parse expression from inputs.
-	var gravity_input: LineEdit = find_node("WindInput")
+	# Parse expression from inputs. Units currently mean nothing.
+	var gravity_input: LineEdit = find_node("GravityInput")
 	var gravity_input_val: String = "0" if gravity_input.text == "" else gravity_input.text
 	# Reset the expression.
 	gravity_formula = Expression.new()
