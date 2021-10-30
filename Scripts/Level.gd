@@ -42,6 +42,17 @@ func make_orb():
 	orb = orb_scene.instance()
 	orb.position = spawn.position
 	scene.add_child(orb)
+	orb.connect("sleeping_state_changed", self, "changed_move_state", [orb])
+
+
+func changed_move_state(object: RigidBody2D) -> void:
+	# A sleeping object has stopped moving.
+	print(object, object.sleeping)
+	if !object.sleeping:
+		return
+	# Re-enable button.
+	# TODO: handle this in some global state.
+	find_node("TakeStrokeButton").disabled = false
 
 
 func take_stroke():
@@ -50,7 +61,8 @@ func take_stroke():
 	var take_stroke_button: Button = find_node("TakeStrokeButton")
 	take_stroke_button.disabled = true
 	
-	# Parse expression from inputs. Units currently mean nothing.
+	# Parse expression from inputs.
+	# TODO: make the units in the UI meaningful.
 	var wind_input: LineEdit = find_node("WindInput")
 	var wind_input_val: String = "0" if wind_input.text == "" else wind_input.text
 	# Reset the expression.
