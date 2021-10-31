@@ -9,6 +9,9 @@ var time: float = 0
 var wind_formula: Expression = null
 var gravity_formula: Expression = null
 
+var mouse_pressed_pos
+var mouse_current_pos
+var linenode
 
 func _ready():
 	# Global map that stores formula values
@@ -21,6 +24,8 @@ func _ready():
 	variables.set("hp", 100)
 	variables.set("time", time)
 	# Create a starting orb
+	mouse_pressed_pos = Vector2(0,0)
+	mouse_current_pos = Vector2(0,0)
 	make_orb()
 
 
@@ -75,3 +80,43 @@ func take_stroke():
 		print("Gravity expression execution failed: ", gravity_formula.get_error_text())
 		take_stroke_button.disabled = false
 		return
+
+# partly copied from https://docs.godotengine.org/en/stable/tutorials/inputs/mouse_and_input_coordinates.html
+func _input(event):
+	# Mouse in viewport coordinates.
+	if event is InputEventMouseButton:
+		#print("Mouse Click/Unclick at: ", event.position)
+		var index
+		index=event.get_button_index()
+		#BUTTON_LEFT = 1 --- Left mouse button.
+		if index==1:
+			if event.is_pressed():
+				#start drawing +
+				mouse_pressed_pos=event.position
+				print("click Mouse Click/Unclick at: ", event.position)
+			else:
+				#stop drawing start shot.
+				Vector2(0,0)
+				linenode=get_node("Line")
+				linenode.mouse_pressed_pos=Vector2(0,0)
+				linenode.mouse_current_pos=Vector2(0,0)
+				linenode.update()
+				print("release Mouse Click/Unclick at: ", event.position)
+				
+	if event is InputEventMouseMotion:
+		#adjust line drawing
+		#print("moved to: ", event.position)
+		mouse_current_pos = event.position
+		linenode=get_node("Line")
+		linenode.mouse_pressed_pos=mouse_pressed_pos
+		linenode.mouse_current_pos=mouse_current_pos
+		linenode.update()
+		pass
+
+#supposedly cleaner way to get inputs but I couldn't find how to get the event
+#func _process(delta):
+	#if Input.is_action_pressed("left_mouse"):
+		
+		# Move right.
+
+
